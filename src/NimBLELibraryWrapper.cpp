@@ -21,7 +21,7 @@ struct WrapperPrivateData: public BLECharacteristicCallbacks,
     void onDisconnect(BLEServer* serverInst);
 
     // BLECharacteristicCallbacks
-    void onWrite(BLECharacteristic* characteristic);
+    void onWrite(BLECharacteristic* characteristic, NimBLEConnInfo& connInfo);
     void onSubscribe(NimBLECharacteristic* pCharacteristic,
                      ble_gap_conn_desc* desc, uint16_t subValue);
 
@@ -51,7 +51,7 @@ void WrapperPrivateData::onSubscribe(NimBLECharacteristic* pCharacteristic,
     }
 }
 
-void WrapperPrivateData::onWrite(BLECharacteristic* characteristic) {
+void WrapperPrivateData::onWrite(BLECharacteristic* characteristic, NimBLEConnInfo& connInfo) {
     if (providerCallbacks == nullptr) {
         return;
     }
@@ -124,8 +124,7 @@ void NimBLELibraryWrapper::init() {
 
     _data->pNimBLEAdvertising = NimBLEDevice::getAdvertising();
     // Helps with iPhone connection issues (copy/paste)
-    _data->pNimBLEAdvertising->setMinPreferred(0x06);
-    _data->pNimBLEAdvertising->setMaxPreferred(0x12);
+    _data->pNimBLEAdvertising->setPreferredParams(0x06, 0x12);
 }
 
 void NimBLELibraryWrapper::createServer() {

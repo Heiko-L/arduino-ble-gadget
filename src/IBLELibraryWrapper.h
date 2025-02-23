@@ -111,7 +111,7 @@ class IBLELibraryWrapper {
     virtual std::string getDeviceAddress() = 0;
     virtual bool characteristicSetValue(const char* uuid, const uint8_t* data,
                                         size_t size) = 0;
-    virtual bool characteristicSetValue(const char* uuid, int value);
+    virtual bool characteristicSetValue(const char* uuid, int value) = 0;
     virtual std::string characteristicGetValue(const char* uuid) = 0;
     virtual bool characteristicNotify(const char* uuid) = 0;
     virtual void
